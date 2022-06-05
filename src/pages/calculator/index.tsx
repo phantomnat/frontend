@@ -8,9 +8,10 @@ import { Update } from '@reduxjs/toolkit'
 interface Props {
     item: Item
     lowest: boolean
+    lowestPPU: number
 }
 
-const LineItem: React.FC<Props> = ({ item, lowest }) => {
+const LineItem: React.FC<Props> = ({ item, lowest, lowestPPU }) => {
     const dispatch = useAppDispatch()
     let onPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(itemUpdated({
@@ -28,15 +29,24 @@ const LineItem: React.FC<Props> = ({ item, lowest }) => {
             },
         }))
     }
-    let formula = `${item.Price}` != `${item.price}` || `${item.Unit}` != `${item.unit}`
-        ? `${item.Price} / ${item.Unit} = ` : ''
+    let percentCompareToLowest = !lowest && lowestPPU != Infinity && item.pricePerUnit != Infinity
+        ? ' | +'+((item.pricePerUnit*100/lowestPPU)-100).toFixed(2)+'%'
+        : ''
+    let value = item.pricePerUnit != Infinity
+        ?  (lowest ? '* ' : '') + item.pricePerUnit.toFixed(4) + percentCompareToLowest
+        : ''
 
     return (
         <GridItem colSpan={3}>
         <Stack direction='row'>
             <Input onChange={onPriceChange} value={item.price}/>
             <Input onChange={onUnitChange} value={item.unit}/>
-            <Input value={item.pricePerUnit != Infinity ? (formula + item.pricePerUnit.toFixed(4) + (lowest ? ' *' : '')) : ''} readOnly errorBorderColor='teal.500' isInvalid={lowest}/>
+            <Input 
+                value={value} 
+                readOnly
+                errorBorderColor='teal.500'
+                isInvalid={lowest}
+                />
         </Stack>
         </GridItem>
     )
@@ -68,6 +78,7 @@ const Calculator: React.FC<{}> = ({}) => {
         })
         dispatch(itemsUpdated(resetItems))
     }
+    let lowestPPU = items[ids[0]]?.pricePerUnit ?? Infinity
 
     return (
         <>
@@ -85,7 +96,12 @@ const Calculator: React.FC<{}> = ({}) => {
                     <Text textAlign={'center'}  fontSize="lg">Price/Unit</Text>
                 </GridItem>
                 {index.map(i => (
-                    <LineItem key={i} item={items[i]!} lowest={i == ids[0] && ((items[i]?.pricePerUnit ?? Infinity) != Infinity)}/>
+                    <LineItem 
+                        key={i}
+                        item={items[i]!}
+                        lowest={i == ids[0] && ((items[i]?.pricePerUnit ?? Infinity) != Infinity)}
+                        lowestPPU={lowestPPU}
+                        />
                 ))}
                 <GridItem>
                     <Button onClick={reset}>Reset</Button>
