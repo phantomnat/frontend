@@ -7,6 +7,7 @@ import {
   Route,
 } from 'react-router-dom'
 import Calculator from 'pages/calculator'
+import Scum from 'pages/scum'
 
 const Main: React.FC<{}> = ({}) => {
 
@@ -29,6 +30,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Main /> } />
             <Route path='/calculator' element={<Calculator /> } />
+            <Route path='/scum' element={<Scum /> } />
           </Routes>
         </BrowserRouter>
         
