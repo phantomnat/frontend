@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Container, Stack, Grid, Input, Box, Text, Button, Flex, Spacer, GridItem, Heading } from '@chakra-ui/react'
 
 import { useAppSelector, useAppDispatch } from 'hooks'
-import { Update } from '@reduxjs/toolkit'
 
 const Scum: React.FC<{}> = ({}) => {
     const dispatch = useAppDispatch()
@@ -12,18 +11,6 @@ const Scum: React.FC<{}> = ({}) => {
     const [switches, setSwitches] = useState(["","","","","","","",""])
     const [swStates, setSwStates] = useState([false,false,false,false,false,false,false,false])
 
-    let onOutputChanged = (txt1: string, txt2: string) => {
-        let o1 = output1
-        let o2 = output2
-        if (txt1 != null) {
-            o1 = (txt1 == "") ? 0 : Number(txt1)
-            setOutput1(o1)
-        }
-        if (txt2 != null) {
-            o2 = (txt2 == "") ? 0 : Number(txt2)
-            setOutput2(o2)
-        }
-    }
     let onSwitchChange = (index: number, value: string) => {
         let newSwitches = switches.map((sw, i) => {
             if (i === index) {
@@ -87,7 +74,13 @@ const Scum: React.FC<{}> = ({}) => {
         }
         console.log(result, newSwStates)
     }, [vInput, output1, output2, switches])
-
+    let reset = () => {
+        setSwitches(switches.map(_ => ("")))
+        setSwStates(swStates.map(_ => (false)))
+        setVInput(0)
+        setOutput1(0)
+        setOutput2(0)
+    }
     return (
         <>
             <Grid gap={4} templateColumns='repeat(3, 1fr)' mt={4} mb={4}>
@@ -96,17 +89,17 @@ const Scum: React.FC<{}> = ({}) => {
                 </GridItem>
                 <GridItem colSpan={2}>
                     <Text align={'center'} fontSize='xl'>Input</Text>
-                    <Input value={vInput} onChange={e => setVInput(Number(e.target.value))}></Input>
+                    <Input value={vInput ? vInput : ""} onChange={e => setVInput(Number(e.target.value))}></Input>
                 </GridItem>
                 <GridItem colSpan={1}>
                 </GridItem>
                 <GridItem colSpan={1}>
                     <Text align={'center'} fontSize='xl'>Output 1</Text>
-                    <Input value={output1} onChange={e => onOutputChanged(e.target.value, null)}></Input>
+                    <Input value={output1 ? output1 : ""} onChange={e => setOutput1(Number(e.target.value))}></Input>
                 </GridItem>
                 <GridItem colSpan={1}>
                     <Text align={'center'} fontSize='xl'>Output 2</Text>
-                    <Input value={output2} onChange={e => onOutputChanged(null, e.target.value)}></Input>
+                    <Input value={output2 ? output2 : ""} onChange={e => setOutput2(Number(e.target.value))}></Input>
                 </GridItem>
                 <GridItem colSpan={1}>
                 </GridItem>
@@ -128,7 +121,7 @@ const Scum: React.FC<{}> = ({}) => {
                     ))
                 }
                 <GridItem>
-                    <Button onClick={()=>{}}>Reset</Button>
+                    <Button onClick={reset}>Reset</Button>
                 </GridItem>
             </Grid>
         </>
