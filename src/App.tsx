@@ -1,4 +1,5 @@
 import './App.css'
+
 import { Button, Center, Container, Heading } from '@chakra-ui/react'
 import NavBar from 'components/navbar'
 import {
@@ -8,8 +9,9 @@ import {
 } from 'react-router-dom'
 import Calculator from 'pages/calculator'
 import Scum from 'pages/scum'
+import Wedding from 'pages/wedding'
 
-const Main: React.FC<{}> = ({}) => {
+const Main: React.FC<{}> = ({ }) => {
 
   return (
     <>
@@ -24,16 +26,17 @@ function App() {
 
   return (
     <>
-      <NavBar />
-      <Container maxW='container.lg'>
+      {/* <NavBar /> */}
+      <Container maxW='100vw'>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Main /> } />
-            <Route path='/calculator' element={<Calculator /> } />
-            <Route path='/scum' element={<Scum /> } />
+            <Route path='/' element={<Main />} />
+            <Route path='/calculator' element={<Calculator />} />
+            <Route path='/scum' element={<Scum />} />
+            <Route path='/w' element={<Wedding />} />
           </Routes>
         </BrowserRouter>
-        
+
       </Container>
     </>
   )
