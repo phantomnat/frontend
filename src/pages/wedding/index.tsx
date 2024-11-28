@@ -1,4 +1,4 @@
-import { Button, calc, Center, Container, Heading, Image, Box, Flex, Spacer } from '@chakra-ui/react'
+import { Button, calc, Center, SimpleGrid, Container, Heading, Image, Box, Flex, Spacer } from '@chakra-ui/react'
 import NavBar from 'components/navbar'
 import React from 'react'
 import {
@@ -61,7 +61,7 @@ const Wedding: React.FC<{}> = ({ }) => {
 
     return (
         <>
-            <Box width={'100%'} height={'100vh'}>
+            <Box width={'100%'} height={'100%'}>
                 <PhotoAutoPlay />
             </Box>
             <Center
@@ -82,24 +82,51 @@ const Wedding: React.FC<{}> = ({ }) => {
                     <Heading as='h2'>Location</Heading>
                 </Center>
             </Box>
-            <Flex height='30vh' mt='3'>
-                <Box width={'40vh'}>
+            <SimpleGrid
+                minH='30vh'
+                // height={['30vh', null, '50vh']}
+                mt='3'
+                columns={[1, null, 2]}
+                style={{
+                    backgroundImage: `url(https://www.magiclovehouse.com/stocks/branch/c2560x960/lx/b1/t5qvlxb1ki2/317264949_1504215106745286_6049798736393599195_n.jpeg)`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: 'no-repeat',
+                }}
+            >
+                <Box
+                    p={2}
+                    minH='30vh'
+                    maxW='100%'
+                    maxH='100%'
+                    backgroundColor={'rgba(0,0,0,0.2)'}
+                >
                     <Center>
-                        Country Cottage
+                        <Box zIndex={99} >
+                            <Image
+                                style={{
+                                    transform: 'scale(0.3)'
+                                }}
+                                src="https://www.magiclovehouse.com/stocks/branch/c400x400/rg/zf/ju7grgzfadi/W_COUNTRY_COTTAGE.png"></Image>
+                        </Box>
                     </Center>
                 </Box>
-                <Box width={'40vh'} overflow='hidden'>
+                <Box
+                    maxW='100%' minH='30vh' maxH='100%' p={6} overflow={'hidden'}
+                    backgroundColor={'rgba(0,0,0,0.2)'}
+                >
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15503.586688579919!2d100.4958685!3d13.72470515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e298f1540261dd%3A0x61c1a2ab4c64410a!2sBright%20Wongwian%20Yai!5e0!3m2!1sen!2sth!4v1732625838091!5m2!1sen!2sth"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.882420143105!2d100.3721900751637!3d13.785960896501612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29754458c9023%3A0xa53fe6796faf6a6d!2sCountry%20Cottage%20Magic%20Love%20House!5e0!3m2!1sen!2sth!4v1732805201086!5m2!1sen!2sth"
                         loading="lazy"
                         width={'100%'}
                         height={'100%'}
-                    // referrerpolicy="no-referrer-when-downgrade"
+                        // style={{ minHeight: '30vh' }}
+                        allowFullScreen={false}
+                        referrerPolicy='no-referrer-when-downgrade'
                     >
                     </iframe>
-                    {/* <iframe src="" width="600" height="450" style="border:0;" allowfullscreen="" ></iframe> */}
                 </Box>
-            </Flex>
+            </SimpleGrid>
             <Flex height='50vh' width='100%' mt='4' style={{
                 backgroundImage: `url(https://placehold.co/1920x1080.png)`,
                 backgroundSize: "cover",

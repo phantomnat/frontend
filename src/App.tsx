@@ -1,6 +1,6 @@
 import './App.css'
 
-import { Button, Center, Container, Heading } from '@chakra-ui/react'
+import { Center, Box, Heading } from '@chakra-ui/react'
 import NavBar from 'components/navbar'
 import {
   BrowserRouter,
@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       {/* <NavBar /> */}
-      <Container maxW='100vw'>
+      <Box>
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Main />} />
@@ -36,8 +36,7 @@ function App() {
             <Route path='/w' element={<Wedding />} />
           </Routes>
         </BrowserRouter>
-
-      </Container>
+      </Box>
     </>
   )
 }
